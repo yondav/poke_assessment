@@ -12,6 +12,10 @@
   --primary-white: #fdf6f6;
   --pure-white: #faf8f2;
   --primary-black: #22221e;
+  --yellow-lte: #ffcb05;
+  --yellow-drk: #c7a008;
+  --blue-lte: #2a75bb;
+  --blue-drk: #3c5aa6;
 
   --radius: 1.5rem;
   --shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px;
@@ -46,6 +50,7 @@ h3,
 h4,
 h5,
 h6 {
+  margin: 0.3rem;
   font-family: var(--ff-primary);
 }
 

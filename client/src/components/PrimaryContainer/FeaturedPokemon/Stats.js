@@ -14,13 +14,13 @@ const Stats = ({ stats }) => {
       {
         label: 'Base',
         data: stats.map(stat => stat.base_stat),
-        backgroundColor: 'green',
+        backgroundColor: '#ffcb05',
         stack: 'Base Stat',
       },
       {
         label: 'Effort',
         data: stats.map(stat => stat.effort),
-        backgroundColor: 'red',
+        backgroundColor: '#2a75bb',
         stack: 'Effort',
       },
     ],
@@ -36,16 +36,13 @@ const Stats = ({ stats }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
       },
     },
   };
 
   return (
     <>
-      <div className='header'>
-        <h3 className='title'>Stats</h3>
-      </div>
       <Bar data={data} options={options} />
     </>
   );

@@ -9,9 +9,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import Types from './Types';
 import Stats from './Stats';
+import Loading from '../../Loading';
+
+import './featured-pokemon.css';
 
 const FeaturedPokemon = ({ name, url }) => {
   const [expand, setExpand] = useState(false);
@@ -45,39 +48,62 @@ const FeaturedPokemon = ({ name, url }) => {
 
   return (
     <Grid item xs={12}>
-      <h1>{name}</h1>
-      <AiOutlinePlus onClick={expandPokemon} style={{ cursor: 'pointer' }} />
+      <div className='poke-name-card'>
+        <h1 className='poke-name' style={{ opacity: !expand ? 1 : 0 }}>
+          {name}
+        </h1>
+        {!expand ? (
+          <AiOutlinePlus
+            onClick={expandPokemon}
+            style={{ cursor: 'pointer' }}
+            size='1.8em'
+          />
+        ) : (
+          <AiOutlineMinus
+            onClick={expandPokemon}
+            style={{ cursor: 'pointer' }}
+            size='1.8em'
+          />
+        )}
+      </div>
       {expand && (
-        <Grid container spacing={2}>
-          {data ? (
-            <>
-              <Grid item xs={12} md={4}>
-                <img
-                  src={
-                    data.sprites.other.dream_world.front_default
-                      ? data.sprites.other.dream_world.front_default
-                      : data.sprites.front_shiny
-                  }
-                  alt={name}
-                />
-              </Grid>
-              <Grid item xs={12} md={8}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <p>Weight: {data.weight} pounds</p>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Types types={data.types} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Stats stats={data.stats} />
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            {data ? (
+              <>
+                <Grid item xs={12} md={3}>
+                  <div className='poke-img'>
+                    <img
+                      src={
+                        data.sprites.other.dream_world.front_default
+                          ? data.sprites.other.dream_world.front_default
+                          : data.sprites.front_shiny
+                      }
+                      alt={name}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={9}>
+                  <Grid container spacing={0}>
+                    <Grid item xs={12}>
+                      <div className='poke-specs'>
+                        <h1 className='poke-name'>{name}</h1>
+                        <div className='inner-specs'>
+                          <div className='weight-types'>
+                            <h3>Weight: {data.weight} pounds</h3>
+                            <Types types={data.types} />
+                          </div>
+                          <Stats stats={data.stats} />
+                        </div>
+                      </div>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </>
-          ) : (
-            <h1>Loading</h1>
-          )}
+              </>
+            ) : (
+              <Loading />
+            )}
+          </Grid>
         </Grid>
       )}
     </Grid>

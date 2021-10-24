@@ -17,6 +17,7 @@
 
 .pokemon-list {
   position: absolute;
+  left: 0;
   overflow: scroll;
 }
 

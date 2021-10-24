@@ -7,9 +7,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
 import Filters from './Filters';
+import FeaturedPokemon from './FeaturedPokemon';
 
 import './primary-container.css';
-import FeaturedPokemon from './FeaturedPokemon';
 
 const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   const { list, perPage, page, pages, sort } = splitRes;
