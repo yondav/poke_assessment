@@ -16,7 +16,7 @@ export default function usePokemon(url) {
     perPage: 25,
     page: 0,
     pages: 0,
-    sort: '',
+    sort: 'asc',
   });
 
   const fetchData = () =>
@@ -27,7 +27,7 @@ export default function usePokemon(url) {
         setSplitRes(prevState => ({
           ...prevState,
           list: res.data.results,
-          pages: Math.floor(res.data.results.length / splitRes.perPage),
+          pages: Math.ceil(res.data.results.length / splitRes.perPage),
         }));
       })
       .catch(err => setError(err))

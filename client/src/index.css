@@ -9,8 +9,7 @@
   --ff-title: 'Oswald', sans-serif;
   --ff-primary: 'Zen Kurenaido', sans-serif;
 
-  --primary-white: #fdf6f6;
-  --pure-white: #faf8f2;
+  --primary-white: #faf8f2;
   --primary-black: #22221e;
   --yellow-lte: #ffcb05;
   --yellow-drk: #c7a008;
@@ -19,16 +18,16 @@
 
   --radius: 1.5rem;
   --shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px;
+  --transition: all 0.3s ease-in-out;
 }
 
-/**** GENERIC ELEMENTS *****/
 body {
   width: 100vw;
   height: 100vh;
   margin: 0;
   font-family: var(--ff-primary);
   color: var(--primary-black);
-  background-color: var(--primary-white);
+  background-color: var(--blue-drk);
 }
 
 #root {
@@ -57,7 +56,7 @@ h6 {
 .pokeball {
   width: 4rem;
   position: absolute;
-  top: 1rem;
+  top: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;

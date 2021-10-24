@@ -6,13 +6,13 @@
 import React from 'react';
 
 const Types = ({ types }) => {
+  // algo to create arrays from strings, iterate through and make first letter of each word uppercase
   const toTitleCase = str =>
     str
       .split(' ')
       .map(word => word[0].toUpperCase() + word.substr(1).toLowerCase())
       .join(' ');
 
-  // returns "Foo Bar Baz"
   return (
     <div className='types-container'>
       {types.map(type => (

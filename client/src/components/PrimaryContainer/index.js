@@ -2,10 +2,12 @@
  * @file /client/src/components/PrimaryContainer/index.js
  * @desc container for all content in current phase of the app
  * @see {@link https://mui.com/ Material-UI}
+ * @see {@link https://www.framer.com/motion/ Framer Motion}
  */
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
+import { motion } from 'framer-motion';
 import Filters from './Filters';
 import FeaturedPokemon from './FeaturedPokemon';
 
@@ -28,7 +30,7 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   // gets selected page number and stores it in state
   const handlePageClick = e => {
     let str = e.target.getAttribute('aria-label').split(' ');
-    let pageNum = parseInt(str[str.length - 1]);
+    let pageNum = parseInt(str[str.length - 1] - 1);
     setSplitRes(prevState => ({ ...prevState, page: pageNum }));
   };
 
@@ -39,7 +41,11 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   }, [filterRef, pagRef]);
 
   return (
-    <main className='primary-container'>
+    <motion.main
+      className='primary-container'
+      initial={{ y: 1000, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { duration: 1, delay: 0.3 } }}
+    >
       <Box sx={{ flexGrow: 1 }}>
         <header ref={filterRef} className='filters'>
           <Filters sort={sort} response={response} setSplitRes={setSplitRes} />
@@ -58,10 +64,18 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
           </Grid>
         </section>
         <footer ref={pagRef} className='pagination-container'>
-          <Pagination count={pages} onChange={handlePageClick} />
+          <Pagination
+            count={pages}
+            onChange={handlePageClick}
+            size='small'
+            variant='string'
+            hidePrevButton
+            hideNextButton
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          />
         </footer>
       </Box>
-    </main>
+    </motion.main>
   );
 };
 

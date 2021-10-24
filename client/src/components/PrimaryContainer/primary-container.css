@@ -4,7 +4,7 @@
   align-self: flex-end;
   position: relative;
   padding: 2rem;
-  background-color: var(--pure-white);
+  background-color: var(--primary-white);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -16,6 +16,7 @@
 }
 
 .pokemon-list {
+  width: 100%;
   position: absolute;
   left: 0;
   overflow: scroll;
@@ -24,6 +25,7 @@
 .pagination-container {
   width: 100%;
   position: absolute;
+  left: 0;
   bottom: 1rem;
 }
 

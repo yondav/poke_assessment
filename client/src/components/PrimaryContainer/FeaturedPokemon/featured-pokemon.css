@@ -5,6 +5,17 @@
   align-items: center;
 }
 
+.expand-btn {
+  transition: var(--transition);
+}
+
+.expand-btn:hover,
+.expand-btn:focus,
+.expand-btn:focus-visible,
+.expand-btn:active {
+  color: var(--blue-lte);
+}
+
 .poke-img {
   width: 100%;
   text-align: center;
@@ -28,7 +39,7 @@
 
 .inner-specs {
   margin-top: 1rem;
-  width: 80%;
+  width: 95%;
 }
 
 .weight-types {
@@ -50,4 +61,10 @@
   color: var(--blue-drk);
   border: 1px solid var(--blue-lte);
   border-radius: var(--radius);
+}
+
+@media only screen and (min-width: 767px) {
+  .inner-specs {
+    width: 80%;
+  }
 }

@@ -8,6 +8,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 const Stats = ({ stats }) => {
+  // configuration for graph as per documentation
   const data = {
     labels: stats.map(stat => stat.stat.name),
     datasets: [

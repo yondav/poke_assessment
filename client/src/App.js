@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import usePokemon from './hooks/usePokemon';
 import PrimaryContainer from './components/PrimaryContainer';
 import Loading from './components/Loading';
@@ -25,7 +26,16 @@ const App = () => {
       {loading && <Loading />}
       {response && !loading && (
         <>
-          <img src={pokeball} alt='pokeball' className='pokeball' />
+          <motion.img
+            src={pokeball}
+            alt='pokeball'
+            className='pokeball'
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 1 },
+            }}
+          />
           <PrimaryContainer
             response={response}
             splitRes={splitRes}
