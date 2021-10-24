@@ -11,13 +11,24 @@
 
 import React from 'react';
 import usePokemon from './hooks/usePokemon';
+import PrimaryContainer from './components/PrimaryContainer';
 
 const App = () => {
   const { response, splitRes, setSplitRes, error, loading } = usePokemon(
     'https://pokeapi.co/api/v2/pokemon?limit=1000&offset=200'
   );
 
-  return <div></div>;
+  return (
+    <div className='wrapper'>
+      {response && (
+        <PrimaryContainer
+          response={response}
+          splitRes={splitRes}
+          setSplitRes={setSplitRes}
+        />
+      )}
+    </div>
+  );
 };
 
 export default App;
