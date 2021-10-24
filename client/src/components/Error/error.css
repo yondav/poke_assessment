@@ -1,0 +1,21 @@
+.error-container {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.error-container img {
+  width: 80%;
+}
+
+@media only screen and (min-width: 767px) {
+  .error-container {
+    width: 75%;
+  }
+}

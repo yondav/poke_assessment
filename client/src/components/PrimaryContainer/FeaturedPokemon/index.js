@@ -7,7 +7,7 @@
  * @see {@link https://www.framer.com/motion/ Framer Motion}
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';

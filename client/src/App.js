@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import usePokemon from './hooks/usePokemon';
 import PrimaryContainer from './components/PrimaryContainer';
 import Loading from './components/Loading';
+import Error from './components/Error';
 import pokeball from './assets/pokeball.svg';
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
           />
         </>
       )}
+      {error && <Error />}
     </div>
   );
 };
