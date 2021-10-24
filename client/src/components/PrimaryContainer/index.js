@@ -4,15 +4,20 @@
  * @see {@link https://mui.com/ Material-UI}
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
 import Filters from './Filters';
 
 import './primary-container.css';
+import FeaturedPokemon from './FeaturedPokemon';
 
 const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   const { list, perPage, page, pages, sort } = splitRes;
   const [poke25, setPoke25] = useState([]);
+  const [filterHeight, setFilterHeight] = useState();
+  const [pagHeight, setPagHeight] = useState();
+  const filterRef = useRef();
+  const pagRef = useRef();
 
   // side effect shifts to the 25 corresponding pokemon for the selected page
   useEffect(
@@ -27,13 +32,34 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
     setSplitRes(prevState => ({ ...prevState, page: pageNum }));
   };
 
+  // side effect to get height of the filter container and pagination container to dynamically set the height of the list container
+  useEffect(() => {
+    setFilterHeight(filterRef.current.offsetHeight + 30);
+    setPagHeight(pagRef.current.offsetHeight + 30);
+  }, [filterRef, pagRef]);
+
   return (
     <main className='primary-container'>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <header ref={filterRef} className='filters'>
           <Filters sort={sort} response={response} setSplitRes={setSplitRes} />
-        </Grid>
-        <Pagination count={pages} onChange={handlePageClick} />
+        </header>
+        <section
+          className='pokemon-list'
+          style={{
+            height: `calc(100% - ${filterHeight + pagHeight}px)`,
+            bottom: pagHeight,
+          }}
+        >
+          <Grid container spacing={2}>
+            {poke25.map((poke, i) => (
+              <FeaturedPokemon key={i} name={poke.name} url={poke.url} />
+            ))}
+          </Grid>
+        </section>
+        <footer ref={pagRef} className='pagination-container'>
+          <Pagination count={pages} onChange={handlePageClick} />
+        </footer>
       </Box>
     </main>
   );

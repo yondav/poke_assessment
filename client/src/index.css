@@ -1,11 +1,30 @@
 /**** CSS NORMALIZE IMPORT *****/
 @import-normalize;
 
+/**** Google Fonts - Zen Kurenaido & Oswld *****/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Zen+Kurenaido&display=swap');
+
+/**** Variables *****/
+:root {
+  --ff-title: 'Oswald', sans-serif;
+  --ff-primary: 'Zen Kurenaido', sans-serif;
+
+  --primary-white: #fdf6f6;
+  --pure-white: #faf8f2;
+  --primary-black: #22221e;
+
+  --radius: 1.5rem;
+  --shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px;
+}
+
 /**** GENERIC ELEMENTS *****/
 body {
   width: 100vw;
   height: 100vh;
   margin: 0;
+  font-family: var(--ff-primary);
+  color: var(--primary-black);
+  background-color: var(--primary-white);
 }
 
 #root {
@@ -19,4 +38,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ff-primary);
+}
+
+.pokeball {
+  width: 4rem;
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }

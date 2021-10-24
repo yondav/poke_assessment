@@ -53,7 +53,7 @@ const Filters = ({ sort, response, setSplitRes }) => {
   };
 
   return (
-    <>
+    <Grid container spacing={2}>
       <Grid item xs={4} md={2}>
         <FormControl fullWidth>
           <InputLabel id='select-sort-label'>Sort</InputLabel>
@@ -78,7 +78,7 @@ const Filters = ({ sort, response, setSplitRes }) => {
           />
         </FormControl>
       </Grid>
-    </>
+    </Grid>
   );
 };
 

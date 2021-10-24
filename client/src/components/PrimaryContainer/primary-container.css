@@ -1,11 +1,35 @@
 .primary-container {
   width: 100%;
-  height: 100%;
+  height: 83%;
+  align-self: flex-end;
+  position: relative;
+  padding: 2rem;
+  background-color: var(--pure-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.filters {
+  width: 93%;
+  position: absolute;
+}
+
+.pokemon-list {
+  position: absolute;
+  overflow: scroll;
+}
+
+.pagination-container {
+  width: 100%;
+  position: absolute;
+  bottom: 1rem;
 }
 
 @media only screen and (min-width: 767px) {
   .primary-container {
-    width: 90%;
-    height: 90%;
+    align-self: center;
+    width: 75%;
+    height: 75%;
   }
 }
