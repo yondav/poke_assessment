@@ -12,6 +12,7 @@
 import React from 'react';
 import usePokemon from './hooks/usePokemon';
 import PrimaryContainer from './components/PrimaryContainer';
+import Loading from './components/Loading';
 import pokeball from './assets/pokeball.svg';
 
 const App = () => {
@@ -21,13 +22,16 @@ const App = () => {
 
   return (
     <div className='wrapper'>
-      <img src={pokeball} alt='pokeball' className='pokeball' />
-      {response && (
-        <PrimaryContainer
-          response={response}
-          splitRes={splitRes}
-          setSplitRes={setSplitRes}
-        />
+      {loading && <Loading />}
+      {response && !loading && (
+        <>
+          <img src={pokeball} alt='pokeball' className='pokeball' />
+          <PrimaryContainer
+            response={response}
+            splitRes={splitRes}
+            setSplitRes={setSplitRes}
+          />
+        </>
       )}
     </div>
   );

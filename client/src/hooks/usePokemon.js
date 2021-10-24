@@ -16,7 +16,7 @@ export default function usePokemon(url) {
     perPage: 25,
     page: 0,
     pages: 0,
-    sort: 'default',
+    sort: '',
   });
 
   const fetchData = () =>
@@ -31,7 +31,7 @@ export default function usePokemon(url) {
         }));
       })
       .catch(err => setError(err))
-      .finally(() => setloading(false));
+      .finally(() => setTimeout(() => setloading(false), 2000));
 
   useEffect(() => {
     fetchData();
