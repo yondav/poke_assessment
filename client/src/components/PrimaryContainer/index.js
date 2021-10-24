@@ -1,5 +1,14 @@
+/**
+ * @file /client/src/components/PrimaryContainer/index.js
+ * @desc container for all content in current phase of the app
+ * @see {@link https://mui.com/ Material-UI}
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
+import Filters from './Filters';
+
+import './primary-container.css';
 
 const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   const { list, perPage, page, pages, sort } = splitRes;
@@ -21,7 +30,9 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
   return (
     <main className='primary-container'>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}></Grid>
+        <Grid container spacing={2}>
+          <Filters sort={sort} response={response} setSplitRes={setSplitRes} />
+        </Grid>
         <Pagination count={pages} onChange={handlePageClick} />
       </Box>
     </main>
