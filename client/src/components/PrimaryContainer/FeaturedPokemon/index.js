@@ -7,7 +7,7 @@
  * @see {@link https://www.framer.com/motion/ Framer Motion}
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -20,25 +20,40 @@ import './featured-pokemon.css';
 const FeaturedPokemon = ({ name, url }) => {
   const [expand, setExpand] = useState(false);
   const [data, setData] = useState();
+  const [prevData, setPrevData] = useState([]);
 
   // fetch single pokemon's data
   const getSinglePokemon = async () => {
-    try {
-      const res = await axios.get(url);
+    // we are looking through our prevData state to see if we've already made this http request
+    // if so, we want to use the data we already have. If not, we will make our api call and we will add the return to our prevData state so we don't have to fetch the data again
+    let storedData = prevData.filter(data => data.url === url);
 
-      if (res) {
-        setData(res.data);
+    if (storedData.length !== 0) {
+      setData(storedData[0]);
+    } else {
+      try {
+        const res = await axios.get(url);
+
+        if (res) {
+          setData(res.data);
+          setPrevData(prevState => [...prevState, { url: url, ...res.data }]);
+          console.log(data);
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
   };
 
   // click handler for expand icon
   const expandPokemon = e => {
     !expand ? setExpand(true) : setExpand(false);
-    getSinglePokemon();
   };
+
+  // side effect to fetch api when expand state is true.
+  // This is more effective than attaching the call to our click handler in case the order of rendered results changes and perhaps an expanded element is no longer associated with the character for which the data was initially fetched.
+  // This side effect will take the url as a dependency to say that if the url changes, we want to make our fetch to the api again
+  useEffect(() => expand && getSinglePokemon(), [url, expand]);
 
   return (
     <Grid item xs={12}>
