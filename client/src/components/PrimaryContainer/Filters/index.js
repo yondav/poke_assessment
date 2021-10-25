@@ -14,7 +14,7 @@ import {
   TextField,
 } from '@mui/material';
 
-const Filters = ({ sort, response, setSplitRes }) => {
+const Filters = ({ sort, response, splitRes, setSplitRes }) => {
   let filteredList = response;
 
   // side effect uses switch statement for sorting options
@@ -49,7 +49,11 @@ const Filters = ({ sort, response, setSplitRes }) => {
         .trim()
         .includes(e.target.value.toLowerCase().trim())
     );
-    setSplitRes(prevState => ({ ...prevState, list: filtered }));
+    setSplitRes(prevState => ({
+      ...prevState,
+      list: filtered,
+      pages: Math.ceil(filtered.length / splitRes.perPage),
+    }));
   };
 
   return (

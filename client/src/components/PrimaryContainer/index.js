@@ -48,7 +48,12 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
     >
       <Box sx={{ flexGrow: 1 }}>
         <header ref={filterRef} className='filters'>
-          <Filters sort={sort} response={response} setSplitRes={setSplitRes} />
+          <Filters
+            sort={sort}
+            response={response}
+            splitRes={splitRes}
+            setSplitRes={setSplitRes}
+          />
         </header>
         <section
           className='pokemon-list'
