@@ -21,14 +21,14 @@ const App = () => {
   const url = 'https://pokeapi.co/api/v2/pokemon/?limit=25&&offset=';
 
   const {
-    state: { error, list, pages },
+    state: { error, results, pages },
     dispatch,
     fetchData,
   } = usePokemon(url);
 
   return (
     <div className='wrapper'>
-      {list && (
+      {results && (
         <>
           <motion.img
             src={pokeball}
@@ -42,7 +42,7 @@ const App = () => {
           />
           <PrimaryContainer
             url={url}
-            list={list}
+            results={results}
             pages={pages}
             dispatch={dispatch}
             fetchData={fetchData}

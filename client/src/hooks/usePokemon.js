@@ -12,7 +12,7 @@ export default function usePokemon(url) {
 
   const initialState = {
     status: 'pending',
-    list: [],
+    results: [],
     perPage: 25,
     page: 1,
     pages: 0,
@@ -37,11 +37,16 @@ export default function usePokemon(url) {
     dispatch({ type: 'request_initiated', payload: { status: 'pending' } });
 
     if (cache.current[endpoint]) {
-      const data = cache.current[url];
-      console.log(data);
+      const data = cache.current[endpoint];
       dispatch({
         type: 'request_cached',
-        payload: { ...data, status: 'data from cache' },
+        payload: {
+          results: data.results,
+          page,
+          pages: Math.ceil(data.count / state.perPage),
+          offset: state.page > 0 && (state.page - 1) * state.perPage,
+          status: 'data from cache',
+        },
       });
     } else {
       try {
@@ -54,7 +59,7 @@ export default function usePokemon(url) {
         dispatch({
           type: 'request_succeeded',
           payload: {
-            list: data.results,
+            results: data.results,
             page,
             pages: Math.ceil(data.count / state.perPage),
             offset: state.page > 0 && (state.page - 1) * state.perPage,

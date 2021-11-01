@@ -13,7 +13,7 @@ import FeaturedPokemon from './FeaturedPokemon';
 
 import './primary-container.css';
 
-const PrimaryContainer = ({ url, list, pages, dispatch, fetchData }) => {
+const PrimaryContainer = ({ url, results, pages, dispatch, fetchData }) => {
   const [poke25, setPoke25] = useState([]);
   // const [filterHeight, setFilterHeight] = useState();
   const [pagHeight, setPagHeight] = useState();
@@ -65,7 +65,7 @@ const PrimaryContainer = ({ url, list, pages, dispatch, fetchData }) => {
           }}
         >
           <Grid container spacing={2}>
-            {list.map((poke, i) => (
+            {results.map((poke, i) => (
               <FeaturedPokemon key={i} name={poke.name} url={poke.url} />
             ))}
           </Grid>
