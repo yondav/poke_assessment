@@ -53,6 +53,7 @@ const Filters = ({ sort, response, splitRes, setSplitRes }) => {
       ...prevState,
       list: filtered,
       pages: Math.ceil(filtered.length / splitRes.perPage),
+      page: 1,
     }));
   };
 

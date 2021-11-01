@@ -7,14 +7,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function usePokemon(url) {
+export default function usePokemon(url, page) {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState('');
   const [loading, setloading] = useState(true);
   const [splitRes, setSplitRes] = useState({
     list: [],
     perPage: 25,
-    page: 0,
+    page: page || 1,
     pages: 0,
     sort: 'asc',
   });
@@ -27,7 +27,7 @@ export default function usePokemon(url) {
         setSplitRes(prevState => ({
           ...prevState,
           list: res.data.results,
-          pages: Math.ceil(res.data.results.length / splitRes.perPage),
+          pages: Math.ceil(res.data.count / splitRes.perPage),
         }));
       })
       .catch(err => setError(err))
