@@ -18,14 +18,17 @@ import Error from './components/Error';
 import pokeball from './assets/pokeball.svg';
 
 const App = () => {
-  const { response, splitRes, setSplitRes, error, loading } = usePokemon(
-    'https://pokeapi.co/api/v2/pokemon?limit=1000&offset=200'
-  );
+  const url = 'https://pokeapi.co/api/v2/pokemon/?limit=25&&offset=';
+
+  const {
+    state: { error, list, pages },
+    dispatch,
+    fetchData,
+  } = usePokemon(url);
 
   return (
     <div className='wrapper'>
-      {loading && <Loading />}
-      {response && !loading && (
+      {list && (
         <>
           <motion.img
             src={pokeball}
@@ -38,9 +41,11 @@ const App = () => {
             }}
           />
           <PrimaryContainer
-            response={response}
-            splitRes={splitRes}
-            setSplitRes={setSplitRes}
+            url={url}
+            list={list}
+            pages={pages}
+            dispatch={dispatch}
+            fetchData={fetchData}
           />
         </>
       )}

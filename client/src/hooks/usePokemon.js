@@ -4,38 +4,83 @@
  * @see {@link https://www.npmjs.com/package/axios Axios}
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import axios from 'axios';
 
 export default function usePokemon(url) {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState('');
-  const [loading, setloading] = useState(true);
-  const [splitRes, setSplitRes] = useState({
+  const cache = useRef({});
+
+  const initialState = {
+    status: 'pending',
     list: [],
     perPage: 25,
-    page: 0,
+    page: 1,
     pages: 0,
-    sort: 'asc',
-  });
+    offset: 0,
+    error: null,
+  };
 
-  const fetchData = () =>
-    axios
-      .get(url)
-      .then(res => {
-        setResponse(res.data.results);
-        setSplitRes(prevState => ({
-          ...prevState,
-          list: res.data.results,
-          pages: Math.ceil(res.data.results.length / splitRes.perPage),
-        }));
-      })
-      .catch(err => setError(err))
-      .finally(() => setTimeout(() => setloading(false), 2000));
+  const [state, dispatch] = useReducer(
+    (state = initialState, { type, payload }) => {
+      console.log(type);
+      return {
+        ...state,
+        ...payload,
+      };
+    },
+    initialState
+  );
+
+  const fetchData = async (url, offset, page, cancelReq) => {
+    let endpoint = url + offset;
+
+    dispatch({ type: 'request_initiated', payload: { status: 'pending' } });
+
+    if (cache.current[endpoint]) {
+      const data = cache.current[url];
+      console.log(data);
+      dispatch({
+        type: 'request_cached',
+        payload: { ...data, status: 'data from cache' },
+      });
+    } else {
+      try {
+        const res = await axios.get(endpoint);
+        const data = await res.data;
+        cache.current[endpoint] = data;
+
+        if (cancelReq) return;
+
+        dispatch({
+          type: 'request_succeeded',
+          payload: {
+            list: data.results,
+            page,
+            pages: Math.ceil(data.count / state.perPage),
+            offset: state.page > 0 && (state.page - 1) * state.perPage,
+            status: 'succeeded',
+          },
+        });
+      } catch (err) {
+        if (cancelReq) return;
+
+        dispatch({
+          type: 'request_failed',
+          payload: { err, status: 'failed' },
+        });
+      }
+    }
+  };
 
   useEffect(() => {
-    fetchData();
-  }, [url]);
+    let cancelReq = false;
+    if (!url) return;
 
-  return { response, splitRes, setSplitRes, error, loading };
+    fetchData(url, state.offset, state.page, cancelReq);
+    return () => {
+      cancelReq = true;
+    };
+  }, [url, state.offset]);
+
+  return { state, dispatch, fetchData };
 }

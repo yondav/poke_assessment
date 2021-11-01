@@ -13,32 +13,33 @@ import FeaturedPokemon from './FeaturedPokemon';
 
 import './primary-container.css';
 
-const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
-  const { list, perPage, page, pages, sort } = splitRes;
+const PrimaryContainer = ({ url, list, pages, dispatch, fetchData }) => {
   const [poke25, setPoke25] = useState([]);
-  const [filterHeight, setFilterHeight] = useState();
+  // const [filterHeight, setFilterHeight] = useState();
   const [pagHeight, setPagHeight] = useState();
-  const filterRef = useRef();
+  // const filterRef = useRef();
   const pagRef = useRef();
 
   // side effect shifts to the 25 corresponding pokemon for the selected page
-  useEffect(
-    () => list && setPoke25(list.slice(page * perPage, (page + 1) * perPage)),
-    [splitRes, list]
-  );
+  // useEffect(
+  //   () => list && setPoke25(list.slice(page * perPage, (page + 1) * perPage)),
+  //   [splitRes, list]
+  // );
 
   // gets selected page number and stores it in state
   const handlePageClick = e => {
     let str = e.target.getAttribute('aria-label').split(' ');
-    let pageNum = parseInt(str[str.length - 1] - 1);
-    setSplitRes(prevState => ({ ...prevState, page: pageNum }));
+    let page = parseInt(str[str.length - 1]);
+    let offset = (page - 1) * 25;
+
+    dispatch({ type: 'page_change', payload: fetchData(url, offset, page) });
   };
 
-  // side effect to get height of the filter container and pagination container to dynamically set the height of the list container
-  useEffect(() => {
-    setFilterHeight(filterRef.current.offsetHeight + 30);
-    setPagHeight(pagRef.current.offsetHeight + 30);
-  }, [filterRef, pagRef]);
+  // // side effect to get height of the filter container and pagination container to dynamically set the height of the list container
+  // useEffect(() => {
+  //   setFilterHeight(filterRef.current.offsetHeight + 30);
+  //   setPagHeight(pagRef.current.offsetHeight + 30);
+  // }, [filterRef, pagRef]);
 
   return (
     <motion.main
@@ -47,23 +48,24 @@ const PrimaryContainer = ({ response, splitRes, setSplitRes }) => {
       animate={{ y: 0, opacity: 1, transition: { duration: 1, delay: 0.3 } }}
     >
       <Box sx={{ flexGrow: 1 }}>
-        <header ref={filterRef} className='filters'>
+        {/* <header ref={filterRef} className='filters'>
           <Filters
             sort={sort}
             response={response}
             splitRes={splitRes}
             setSplitRes={setSplitRes}
           />
-        </header>
+        </header> */}
         <section
           className='pokemon-list'
           style={{
-            height: `calc(100% - ${filterHeight + pagHeight}px)`,
+            // height: `calc(100% - ${filterHeight + pagHeight}px)`,
+            height: `calc(100% - ${pagHeight}px)`,
             bottom: pagHeight,
           }}
         >
           <Grid container spacing={2}>
-            {poke25.map((poke, i) => (
+            {list.map((poke, i) => (
               <FeaturedPokemon key={i} name={poke.name} url={poke.url} />
             ))}
           </Grid>
